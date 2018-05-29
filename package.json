@@ -1,0 +1,17 @@
+{
+  "name": "workforce_mock_location_service",
+  "version": "0.1.0",
+  "description": "Mock location service",
+  "main": "app.js",
+  "author": "sweetIQ",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "koa": "^2.5.1",
+    "koa-body": "^1.7.0",
+    "koa-logger": "^3.2.0",
+    "koa-mongoose": "^2.0.0",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.1.2"
+  }
+}
