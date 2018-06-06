@@ -7,11 +7,16 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "koa": "^2.5.1",
     "koa-body": "^1.7.0",
     "koa-logger": "^3.2.0",
     "koa-mongoose": "^2.0.0",
     "koa-router": "^7.4.0",
-    "mongoose": "^5.1.2"
+    "koa-views": "^6.1.4",
+    "mongoose": "^5.1.2",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5",
+    "underscore": "^1.9.1"
   }
 }

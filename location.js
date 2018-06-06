@@ -41,6 +41,12 @@ const Location = new Schema({
   // }
   payload: {
     type: Object
+  },
+  directory_url: {
+    type: String
+  },
+  error: {
+    type: String
   }
 },{
   collection: 'locations'
