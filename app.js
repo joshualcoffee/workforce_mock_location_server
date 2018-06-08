@@ -8,6 +8,8 @@ const  router = new Router();
 const koaBody = require('koa-body');
 const auth = require('./auth');
 const views = require('koa-views');
+const locationsData = require('./locations');
+const wf = require('./workforce_connector');
 app.use(koaBody())
   .use(logger())
   .use(views(__dirname + '/views', {
@@ -25,7 +27,6 @@ router.get('/', async (ctx, next) => {
 router.post('/harmony/hooks/callback', async (ctx, next) => {
   const payload = ctx.request.body.payload;
   const location = await Location.findById(payload.location._id);
-  console.log(payload)
   try {
     if(payload.error) {
       await location.update({error: payload.error});
@@ -34,7 +35,6 @@ router.post('/harmony/hooks/callback', async (ctx, next) => {
     }
     ctx.response.status = 200;
     const updatedLocation = await Location.findById(payload.location._id);
-    console.log(updatedLocation)
     ctx.response.body = {'location': ctx.request.body};
   } catch(e) {
     ctx.response.status = 401;
@@ -42,21 +42,33 @@ router.post('/harmony/hooks/callback', async (ctx, next) => {
   }
 });
 
-// router.put('/locations', async (ctx, next) => {
-//   const body = ctx.request.body;
-//   const location = await Location.findOne({ 'payload._id': body._id });
-//   try {
-//     await location.update({payload: body});
-//     const updatedLocation = await Location.findOne({ 'payload._id': body._id });
-//     ctx.response.status = 200;
-//     ctx.response.body = {'location': updatedLocation};
-//   } catch(e) {
-//     ctx.response.status = 401;
-//     ctx.response.body = {'error': e};
-//   }
-// });
+router.get('/new_operation', async (ctx, next) => {
+  await ctx.render('new_operation.html', {
+    locations: locationsData
+  })
+});
+
+router.post('/new_operation', async (ctx, next) => {
+  const body = ctx.request.body;
+  const ids = body.locations.map(l => parseInt(l));
+  const selectedLocations = locationsData
+    .filter((l) => ids.includes(l._id))
+    .map((l) => {
+      const location = new Location({payload: l});
+      location.save();
+      return wf.createOperation(body.directory, location);
+    });
+
+  try{
+    await wf.batchSendOperations(selectedLocations);
+  }catch(e) {
+    console.log(e)
+  }
+  ctx.redirect('/')
+});
+
 app
   .use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(3200);
+app.listen(3000);

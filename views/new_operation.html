@@ -1,0 +1,20 @@
+<form action="/new_operation" method="POST">
+  <h2>Location:</h2>
+  <% locations.forEach(function(location){ %>
+    <input type='checkbox' name="locations[]" value='<%= location._id %>' />
+    <%= location.name %>
+    <br />
+  <% }); %>
+  <hr/>
+  <h2>Directory:</h2>
+  <select name="directory">
+    <option value="enrollbusiness">enrollbusiness</option>
+    <option value="brownbook">brownbook</option>
+    <option value="tupalo">tupalo</option>
+    <option value="getfave">getfave</option>
+    <option value="ebusinesspages">ebusinesspages</option>
+  </select>
+  <br />
+  <br />
+  <input type="submit" />
+</form>

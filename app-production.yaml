@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: sweetiq-tasker-sandbox-east
+  name: workforce-fake-service-deployment
+  labels:
+    app: workforce-fake-service
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: workforce-fake-service
+    spec:
+      containers:
+      - args:
+        image: quay.io/joshualcoffee/workforce_fake_service
+        env:
+        - name: TASKER_URL
+          value: "https://workforce-staging.swiq3.com/"
+        name: app
+        ports:
+        - containerPort: 3000
+        resources: {}
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: joshualcoffee-pull-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  namespace: sweetiq-tasker-sandbox-east
+  name: workforce-fake-service-service
+  labels:
+    app: workforce-fake-service-service
+spec:
+  type: "LoadBalancer"
+  ports:
+  - name: "3000"
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: workforce-fake-service

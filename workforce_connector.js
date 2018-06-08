@@ -25,15 +25,10 @@ const directories = {
   },
 }
 
-let token = null;
-
 const workforceRequest = async (url, body) => {
-  if(!token){
-    const authResp = await auth();
-    token = authResp.access_token;
-  }
-  console.log(body)
-  request.post({
+  const authResp = await auth();
+  const token = authResp.access_token;
+  return request.post({
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -59,8 +54,9 @@ const createOperation = (directory, location) => {
 }
 
 const batchSendOperations = (operations) => {
+  console.log()
   return workforceRequest(
-    'http://localhost:4000/api/operations',
+    `${process.env.TASKER_URL}/api/operations`,
     operations
   )
 }
