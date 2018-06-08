@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - args:
-        image: quay.io/gannett/workforce_fake_service
+        image: quay.io/gannett/tasker_fake_service
         env:
         - name: TASKER_URL
           value: "https://workforce-staging.swiq3.com/"

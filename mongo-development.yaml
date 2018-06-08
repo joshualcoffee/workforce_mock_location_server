@@ -1,7 +1,6 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  namespace: sweetiq-tasker-sandbox-east
   name: workforce-fake-service-mongo-deployment
   labels:
     app: workforce-fake-service-mongo
@@ -31,7 +30,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: sweetiq-tasker-sandbox-east
   creationTimestamp: null
   name: workforce-fake-service-mongo-service
   labels:

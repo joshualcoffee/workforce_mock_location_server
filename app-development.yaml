@@ -26,13 +26,12 @@ spec:
         resources: {}
       restartPolicy: Always
       imagePullSecrets:
-      - name: dev
+      - name: joshualcoffee-pull-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   creationTimestamp: null
-  namespace: sweetiq-tasker-sandbox-east
   name: workforce-fake-service-service
   labels:
     app: workforce-fake-service-service
