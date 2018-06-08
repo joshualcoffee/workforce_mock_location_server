@@ -1,7 +1,6 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  namespace: sweetiq-tasker-sandbox-east
   name: workforce-fake-service-deployment
   labels:
     app: workforce-fake-service
@@ -17,7 +16,7 @@ spec:
     spec:
       containers:
       - args:
-        image: quay.io/gannett/workforce_fake_service
+        image: quay.io/joshualcoffee/workforce_fake_service
         env:
         - name: TASKER_URL
           value: "https://workforce-staging.swiq3.com/"
@@ -27,7 +26,7 @@ spec:
         resources: {}
       restartPolicy: Always
       imagePullSecrets:
-      - name: gannett-sweetiq-pull-pull-secret
+      - name: dev
 ---
 apiVersion: v1
 kind: Service
