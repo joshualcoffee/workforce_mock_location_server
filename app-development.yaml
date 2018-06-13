@@ -20,13 +20,23 @@ spec:
         env:
         - name: TASKER_URL
           value: "https://workforce-staging.swiq3.com/"
+        - name: AUTH0_TOKEN
+          valueFrom:
+            secretKeyRef:
+             name: app-data
+             key: auth0_client_id
+        - name: AUTH0_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-data
+              key: auth0_secret
         name: app
         ports:
         - containerPort: 3000
         resources: {}
       restartPolicy: Always
       imagePullSecrets:
-      - name: joshualcoffee-pull-secret
+      - name: quay-secret
 ---
 apiVersion: v1
 kind: Service
@@ -38,8 +48,8 @@ metadata:
 spec:
   type: "LoadBalancer"
   ports:
-  - name: "3000"
-    port: 3000
+  - name: "80"
+    port: 80
     targetPort: 3000
   selector:
     app: workforce-fake-service

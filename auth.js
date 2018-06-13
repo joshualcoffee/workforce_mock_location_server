@@ -6,8 +6,8 @@ module.exports = async () => {
       uri: 'https://sweetiq-dev.auth0.com/oauth/token',
       body: {
         "audience": "workforce",
-        "client_id": "QyDn93EXF7NjGutoOgpmEgFAEcsUdxA5",
-        "client_secret": "p1_9Q3SqQj02K5Fv1Bf5J5Jgnb96kWY47dGXwb1wUILAYcqIrcY66Xq09pUtAwSG",
+        "client_id": process.env.AUTH0_TOKEN,
+        "client_secret": process.env.AUTH0_SECRET,
         "grant_type": "client_credentials"
       },
       json: true
